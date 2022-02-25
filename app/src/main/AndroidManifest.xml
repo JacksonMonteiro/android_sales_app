@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SalesRecord">
         <activity
+            android:name=".activities.UserLogin"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

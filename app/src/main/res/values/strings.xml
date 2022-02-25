@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SalesRecord</string>
+    <string name="login_button">Entrar</string>
+    <string name="register_button">Criar Conta</string>
 </resources>
