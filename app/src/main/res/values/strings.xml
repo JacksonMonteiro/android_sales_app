@@ -1,5 +1,14 @@
 <resources>
-    <string name="app_name">SalesRecord</string>
+    <string name="app_name">Registra.se</string>
     <string name="login_button">Entrar</string>
     <string name="register_button">Criar Conta</string>
+    <string name="back_button">Voltar</string>
+    <string name="return_button">Return to Last Screen button</string>
+    <string name="username_label">Nome de usuário:</string>
+    <string name="username_placeholder">Seu nome</string>
+    <string name="email_label">E-mail:</string>
+    <string name="email_placeholder">email@registra.com</string>
+    <string name="password_label">Senha:</string>
+    <string name="password_placeholder">********</string>
+    <string name="create_sale_button">Cadastrar venda</string>
 </resources>
