@@ -6,49 +6,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.salesrecord.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class SalesActivity extends AppCompatActivity {
+public class ConfigActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
-    private Button insertSaleButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sales);
-        // Assign variables
+        setContentView(R.layout.activity_config);
+
         navigationView = findViewById(R.id.bottom_navigation);
-        insertSaleButton = findViewById(R.id.create_sale_button);
-
-
-        // Button Methods
-        insertSaleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), SalesRegister.class));
-            }
-        });
-
-
-        // Navigation Menu
 
         // set selected item
-        navigationView.setSelectedItemId(R.id.home);
+        navigationView.setSelectedItemId(R.id.config);
         // Perform selection list
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()) {
+                switch (item.getItemId()) {
                     case R.id.home:
-                        return true;
-                    case R.id.config:
-                        Intent intent = new Intent(getApplicationContext(), ConfigActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), SalesActivity.class);
                         startActivity(intent);
                         finish();
+                        return true;
+                    case R.id.config:
                         return true;
                 }
                 return false;
@@ -58,8 +43,7 @@ public class SalesActivity extends AppCompatActivity {
 
     @Override
     protected void onRestart() {
-        navigationView.setSelectedItemId(R.id.home);
+        navigationView.setSelectedItemId(R.id.config);
         super.onRestart();
     }
-
 }

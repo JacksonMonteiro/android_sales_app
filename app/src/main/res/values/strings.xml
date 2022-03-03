@@ -11,4 +11,16 @@
     <string name="password_label">Senha:</string>
     <string name="password_placeholder">********</string>
     <string name="create_sale_button">Cadastrar venda</string>
+    <string name="buyer_label">Nome do comprador:</string>
+    <string name="buyer_placeholder">Matheus</string>
+    <string name="sale_value">100,00</string>
+    <string name="paid_value">120,00</string>
+    <string name="paid_value_label">Valor pago:</string>
+    <string name="currency_placeholder">20,00</string>
+    <string name="currency_label">Troco:</string>
+    <string name="sale_value_label">Valor da compra:</string>
+    <string name="sale_desc_placeholder">Descrição da venda...</string>
+    <string name="sale_desc_label">Descrição da venda</string>
+    <string name="cpf_placeholder">123.456.789-01</string>
+    <string name="cpf_label">CPF do comprador:</string>
 </resources>

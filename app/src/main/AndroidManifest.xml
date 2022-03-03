@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SalesRecord">
         <activity
+            android:name=".activities.SalesRegister"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ConfigActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SalesActivity"
             android:exported="false" />
         <activity
