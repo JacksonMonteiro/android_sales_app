@@ -17,13 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent startIntent = new Intent(MainActivity.this, UserLogin.class);
-                startActivity(startIntent);
-                finish();
-            }
+        new Handler().postDelayed(() -> {
+            Intent startIntent = new Intent(MainActivity.this, UserLogin.class);
+            startActivity(startIntent);
+            finish();
         }, SPLASH_SCREEN_TIMEOUT);
     }
 }

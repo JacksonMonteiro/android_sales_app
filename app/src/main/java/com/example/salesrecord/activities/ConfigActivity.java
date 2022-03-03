@@ -1,11 +1,9 @@
 package com.example.salesrecord.activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import com.example.salesrecord.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,20 +22,17 @@ public class ConfigActivity extends AppCompatActivity {
         // set selected item
         navigationView.setSelectedItemId(R.id.config);
         // Perform selection list
-        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.home:
-                        Intent intent = new Intent(getApplicationContext(), SalesActivity.class);
-                        startActivity(intent);
-                        finish();
-                        return true;
-                    case R.id.config:
-                        return true;
-                }
-                return false;
+        navigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.home:
+                    Intent intent = new Intent(getApplicationContext(), SalesActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
+                case R.id.config:
+                    return true;
             }
+            return false;
         });
     }
 

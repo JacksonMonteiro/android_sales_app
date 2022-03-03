@@ -16,7 +16,7 @@ public class UserDbController extends CreateDB {
 
     public String createUser(String username, String email, String password) {
         ContentValues values = new ContentValues();
-        long result = 0;
+        long result;
 
         if (!userExits(email)) {
             db = this.getWritableDatabase();
@@ -39,7 +39,7 @@ public class UserDbController extends CreateDB {
 
     public boolean userExits(String email) {
         String query = "SELECT * FROM " + CreateDB.USER_TABLE + " WHERE " + CreateDB.EMAIL + " = ?";
-        String whereArgs[] = {email};
+        String[] whereArgs = {email};
         db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, whereArgs);
         int count = cursor.getCount();
@@ -50,7 +50,7 @@ public class UserDbController extends CreateDB {
 
     public boolean isCredentialsOk(String email, String password) {
         String query = "SELECT * FROM " + CreateDB.USER_TABLE + " WHERE " + CreateDB.EMAIL + " = ? AND " + CreateDB.PASSWORD + " = ?";
-        String whereArgs[] = {email, password};
+        String[] whereArgs = {email, password};
         db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, whereArgs);
         int count = cursor.getCount();

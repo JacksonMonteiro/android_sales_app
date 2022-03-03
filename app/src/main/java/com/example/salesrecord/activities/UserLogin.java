@@ -15,7 +15,6 @@ import com.example.salesrecord.controller.UserDbController;
 import java.util.regex.Pattern;
 
 public class UserLogin extends AppCompatActivity {
-    private Button registerButton, loginButton;
     private EditText emailInput, passwordInput;
 
     @Override
@@ -27,34 +26,28 @@ public class UserLogin extends AppCompatActivity {
         passwordInput = findViewById(R.id.password_login);
 
         // Buttons
-        registerButton = findViewById(R.id.register_button);
-        loginButton = findViewById(R.id.login_button);
+        Button registerButton = findViewById(R.id.register_button);
+        Button loginButton = findViewById(R.id.login_button);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserDbController controller = new UserDbController(getBaseContext());
+        loginButton.setOnClickListener(view -> {
+            UserDbController controller = new UserDbController(getBaseContext());
 
-                String email = emailInput.getText().toString();
-                String pass = passwordInput.getText().toString();
-                
-                if (validateInputs(email, pass)) {
-                    if (controller.isCredentialsOk(email, pass)) {
-                        Intent intent = new Intent(UserLogin.this, SalesActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "E-mail ou senha incorretos", Toast.LENGTH_SHORT).show();
-                    }
+            String email = emailInput.getText().toString();
+            String pass = passwordInput.getText().toString();
+
+            if (validateInputs(email, pass)) {
+                if (controller.isCredentialsOk(email, pass)) {
+                    Intent intent = new Intent(UserLogin.this, SalesActivity.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "E-mail ou senha incorretos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent registerIntent = new Intent(UserLogin.this, UserRegister.class);
-                startActivity(registerIntent);
-            }
+        registerButton.setOnClickListener(view -> {
+            Intent registerIntent = new Intent(UserLogin.this, UserRegister.class);
+            startActivity(registerIntent);
         });
     }
 

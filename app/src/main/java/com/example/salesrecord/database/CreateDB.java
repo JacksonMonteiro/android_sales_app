@@ -19,7 +19,7 @@ public class CreateDB extends SQLiteOpenHelper {
     protected static final String SALES_ID = "id";
     protected static final String BUYER = "buyer";
     protected static final String CPF = "cpf";
-    protected static final String DESC = "desc";
+    protected static final String DESC = "sales_desc";
     protected static final String VALUE = "value";
     protected static final String PAID_VALUE = "paid_value";
     protected static final String CURRENCY = "currency";
