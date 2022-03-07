@@ -21,8 +21,7 @@ public class SalesRegister extends AppCompatActivity {
     private ImageButton returnButton;
 
     // Variables
-    float valueFloat = 0;
-    float paidValueFloat = 0;
+    float valueFloat = 0, paidValueFloat = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +59,15 @@ public class SalesRegister extends AppCompatActivity {
             String paidValue = paidValueInput.getText().toString();
 
             if (validate(buyer_name, cpf, value, paidValue)) {
-                Toast.makeText(this, "Validado", Toast.LENGTH_SHORT).show();
+                currency = getSaleCurrency(paidValueFloat, valueFloat);
+
+                String queryResult = controller.createSale(buyer_name, cpf, sale_desc, value, paidValue, currency);
+                if (queryResult.equals("Venda registrada com sucesso")) {
+                    Toast.makeText(this, queryResult, Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(this, queryResult, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -118,5 +125,10 @@ public class SalesRegister extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    public String getSaleCurrency(Float pv, Float sv) {
+        String currencyValue = NumberFormat.getCurrencyInstance(MoneyTextWatcher.PT_BR).format(pv - sv);
+        return currencyValue;
     }
 }
