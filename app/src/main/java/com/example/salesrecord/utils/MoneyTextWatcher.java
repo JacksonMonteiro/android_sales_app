@@ -10,13 +10,12 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Objects;
 
-public class CurrencyMaskUtil implements TextWatcher {
+public class MoneyTextWatcher implements TextWatcher {
     private final WeakReference<EditText> editTextWeakReference;
-    private final Locale locale;
+    public static final Locale PT_BR = new Locale("pt", "BR");
 
-    public CurrencyMaskUtil(EditText editText, Locale locale) {
+    public MoneyTextWatcher(EditText editText) {
         this.editTextWeakReference = new WeakReference<>(editText);
-        this.locale = locale != null ? locale : Locale.getDefault();
     }
 
 
@@ -34,10 +33,11 @@ public class CurrencyMaskUtil implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         EditText editText = editTextWeakReference.get();
         if (editText == null) return;
+
         editText.removeTextChangedListener(this);
 
-        BigDecimal parsed = parseToBigDecimal(editable.toString(), locale);
-        String formatted = NumberFormat.getCurrencyInstance(locale).format(parsed);
+        BigDecimal parsed = parseToBigDecimal(editable.toString(), PT_BR);
+        String formatted = NumberFormat.getCurrencyInstance(PT_BR).format(parsed);
         // NumberFormat.getNumberInstance(locale).format(parsed); // sem o simbolo de moeda
 
         editText.setText(formatted);
@@ -46,7 +46,7 @@ public class CurrencyMaskUtil implements TextWatcher {
     }
 
     private BigDecimal parseToBigDecimal(String value, Locale locale) {
-        String replaceable = String.format("[%s,.\\s]", Objects.requireNonNull(NumberFormat.getCurrencyInstance(locale).getCurrency()).getSymbol());
+        String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance(locale).getCurrency().getSymbol());
 
         String cleanString = value.replaceAll(replaceable, "");
 

@@ -1,23 +1,19 @@
 package com.example.salesrecord.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.salesrecord.R;
 import com.example.salesrecord.controller.UserDbController;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserRegister extends AppCompatActivity {
-    private ImageButton returnButton;
-    private Button backButton, createUserButton;
     private EditText usernameInput, emailInput, passwordInput;
 
     @Override
@@ -30,51 +26,38 @@ public class UserRegister extends AppCompatActivity {
         emailInput = findViewById(R.id.email);
         passwordInput = findViewById(R.id.password);
 
-        returnButton = findViewById(R.id.return_button);
+        ImageButton returnButton = findViewById(R.id.return_button);
 
-        backButton = findViewById(R.id.back_button);
-        createUserButton = findViewById(R.id.create_user_button);
+        Button backButton = findViewById(R.id.back_button);
+        Button createUserButton = findViewById(R.id.create_user_button);
 
         // Create User Action
-        createUserButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserDbController controller = new UserDbController(getBaseContext());
-                String usr = usernameInput.getText().toString();
-                String email = emailInput.getText().toString();
-                String pass = passwordInput.getText().toString();
+        createUserButton.setOnClickListener(view -> {
+            UserDbController controller = new UserDbController(getBaseContext());
+            String usr = usernameInput.getText().toString();
+            String email = emailInput.getText().toString();
+            String pass = passwordInput.getText().toString();
 
-                if (validateInputs(usr, email, pass)) {
-                    if (!controller.userExits(email)) {
-                        String queryResult;
-                        queryResult = controller.createUser(usr, email, pass);
-                        if (queryResult.equals("Conta criada com sucesso")) {
-                            Toast.makeText(getApplicationContext(), queryResult, Toast.LENGTH_LONG).show();
-                            finish();
-                        } else {
-                            Toast.makeText(getApplicationContext(), queryResult, Toast.LENGTH_LONG).show();
-                        }
+            if (validateInputs(usr, email, pass)) {
+                if (!controller.userExits(email)) {
+                    String queryResult;
+                    queryResult = controller.createUser(usr, email, pass);
+                    if (queryResult.equals("Conta criada com sucesso")) {
+                        Toast.makeText(getApplicationContext(), queryResult, Toast.LENGTH_LONG).show();
+                        finish();
                     } else {
-                        Toast.makeText(getApplicationContext(), "E-mail já cadastrado! Utilize outro para cadastrar-se", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), queryResult, Toast.LENGTH_LONG).show();
                     }
+                } else {
+                    Toast.makeText(getApplicationContext(), "E-mail já cadastrado! Utilize outro para cadastrar-se", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         // Finish Activity Buttons
-        returnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        returnButton.setOnClickListener(view -> finish());
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        backButton.setOnClickListener(view -> finish());
     }
 
     public boolean validateInputs(String usr, String email, String pass) {

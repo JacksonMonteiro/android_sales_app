@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="16dp"
     android:orientation="vertical"
-    tools:context=".activities.UserRegister"
-    android:layout_margin="16dp">
+    tools:context=".activities.UserRegister">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,25 +26,25 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/buyer_label"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"/>
+        android:textSize="16sp" />
 
     <EditText
-        android:layout_width="match_parent"
         android:id="@+id/buyer"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:autofillHints="name"
-        android:inputType="textPersonName"
         android:hint="@string/buyer_placeholder"
-        android:textColorHint="@color/primaryColorDark"
-        android:padding="10dp"/>
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:textColorHint="@color/primaryColorDark" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/cpf_label"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <EditText
         android:id="@+id/cpf"
@@ -61,68 +61,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sale_desc_label"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <EditText
+        android:id="@+id/sale_desc"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/sale_desc"
-        android:inputType="textLongMessage"
         android:autofillHints="password"
         android:hint="@string/sale_desc_placeholder"
-        android:textColorHint="@color/primaryColorDark"
-        android:padding="10dp"/>
+        android:inputType="textLongMessage"
+        android:padding="10dp"
+        android:textColorHint="@color/primaryColorDark" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/sale_value_label"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <EditText
+        android:id="@+id/sale_value"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/sale_value"
-        android:inputType="numberDecimal"
         android:autofillHints=""
         android:hint="@string/sale_value"
-        android:textColorHint="@color/primaryColorDark"
-        android:padding="10dp"/>
+        android:inputType="numberDecimal"
+        android:padding="10dp"
+        android:textColorHint="@color/primaryColorDark" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/paid_value_label"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
 
     <EditText
+        android:id="@+id/paid_value"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/paid_value"
-        android:inputType="numberDecimal"
         android:autofillHints=""
         android:hint="@string/paid_value"
-        android:textColorHint="@color/primaryColorDark"
-        android:padding="10dp"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/currency_label"
-        android:textSize="16sp"/>
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:id="@+id/currency"
         android:inputType="numberDecimal"
-        android:autofillHints=""
-        android:hint="@string/currency_placeholder"
-        android:textColorHint="@color/primaryColorDark"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:textColorHint="@color/primaryColorDark" />
 
     <Button
-        android:id="@+id/create_user_button"
+        android:id="@+id/create_sale_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/primaryColor"

@@ -40,11 +40,11 @@ public class CreateDB extends SQLiteOpenHelper {
         String SalesSQL = "CREATE TABLE " + SALES_TABLE + "(" +
                 SALES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 BUYER + " TEXT," +
-                CPF + " INTEGER," +
+                CPF + " TEXT," +
                 DESC + " TEXT," +
-                VALUE + " INTEGER," +
-                PAID_VALUE + " INTEGER," +
-                CURRENCY + " INTEGER)";
+                VALUE + " TEXT," +
+                PAID_VALUE + " TEXT," +
+                CURRENCY + " TEXT)";
 
         db.execSQL(Usersql);
         db.execSQL(SalesSQL);
