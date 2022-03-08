@@ -7,18 +7,19 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.salesrecord.database.CreateDB;
 
-public class SalesDbController extends CreateDB {
+public class SalesDbController  {
     private SQLiteDatabase db;
+    private CreateDB database;
 
     public SalesDbController(Context context) {
-        super(context);
+        database = new CreateDB(context);
     }
 
     public String createSale(String buyer, String cpf, String desc, String value, String paidValue, String currency) {
         ContentValues values = new ContentValues();
         long result;
 
-        db = this.getWritableDatabase();
+        db = database.getWritableDatabase();
         values.put(CreateDB.BUYER, buyer);
         values.put(CreateDB.CPF, cpf);
         values.put(CreateDB.DESC, desc);
@@ -34,5 +35,17 @@ public class SalesDbController extends CreateDB {
         } else {
             return "Falha ao registrar a venda";
         }
+    }
+
+    public Cursor readSales() {
+        String query = "SELECT " + CreateDB.BUYER + ", " + CreateDB.VALUE + " FROM " + CreateDB.SALES_TABLE;
+        db = database.getReadableDatabase();
+        Cursor cursor = null;
+
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+
+        return cursor;
     }
 }

@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SalesRecord">
         <activity
+            android:name=".activities.SalesManager"
+            android:exported="false" />
+        <activity
             android:name=".activities.SalesRegister"
             android:exported="false" />
         <activity

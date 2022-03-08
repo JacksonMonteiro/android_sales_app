@@ -17,8 +17,6 @@ import java.text.NumberFormat;
 
 public class SalesRegister extends AppCompatActivity {
     private EditText buyerInput, cpfInput, descInput, valueInput, paidValueInput;
-    private Button backButton, registerSaleButton;
-    private ImageButton returnButton;
 
     // Variables
     float valueFloat = 0, paidValueFloat = 0;
@@ -34,9 +32,9 @@ public class SalesRegister extends AppCompatActivity {
         descInput = findViewById(R.id.sale_desc);
         valueInput = findViewById(R.id.sale_value);
         paidValueInput = findViewById(R.id.paid_value);
-        backButton = findViewById(R.id.back_button);
-        returnButton = findViewById(R.id.return_button);
-        registerSaleButton = findViewById(R.id.create_sale_button);
+        Button backButton = findViewById(R.id.back_button);
+        ImageButton returnButton = findViewById(R.id.return_button);
+        Button registerSaleButton = findViewById(R.id.create_sale_button);
 
         // Set CPF and Currency input mask to inputs
         cpfInput.addTextChangedListener(CpfMaskUtil.cpfMasker(cpfInput, CpfMaskUtil.FORMAT_CPF));
@@ -50,7 +48,7 @@ public class SalesRegister extends AppCompatActivity {
         // Register Sale Method
         registerSaleButton.setOnClickListener(view -> {
             SalesDbController controller = new SalesDbController(getBaseContext());
-            String currency = "";
+            String currency;
 
             String buyer_name = buyerInput.getText().toString();
             String cpf = cpfInput.getText().toString();
@@ -128,7 +126,6 @@ public class SalesRegister extends AppCompatActivity {
     }
 
     public String getSaleCurrency(Float pv, Float sv) {
-        String currencyValue = NumberFormat.getCurrencyInstance(MoneyTextWatcher.PT_BR).format(pv - sv);
-        return currencyValue;
+        return NumberFormat.getCurrencyInstance(MoneyTextWatcher.PT_BR).format(pv - sv);
     }
 }
