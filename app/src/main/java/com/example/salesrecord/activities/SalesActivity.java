@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class SalesActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
     private RecyclerView recycler;
-    private ArrayList<String> buyers, values;
+    private ArrayList<String> buyers, values, ids;
     private SalesDbController controller;
     private SalesAdapter adapter;
 
@@ -39,6 +39,7 @@ public class SalesActivity extends AppCompatActivity {
 
         buyers = new ArrayList<>();
         values = new ArrayList<>();
+        ids = new ArrayList<>();
 
         fillArrayList();
         attachAdapter();
@@ -78,8 +79,9 @@ public class SalesActivity extends AppCompatActivity {
         Cursor cursor = controller.readSales();
         if (cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
-                buyers.add(cursor.getString(0));
-                values.add(cursor.getString(1));
+                ids.add(cursor.getString(0));
+                buyers.add(cursor.getString(1));
+                values.add(cursor.getString(2));
             }
         } else {
             Toast.makeText(this, "Não há dados para exibir", Toast.LENGTH_SHORT).show();
@@ -87,7 +89,7 @@ public class SalesActivity extends AppCompatActivity {
     }
 
     public void attachAdapter() {
-        adapter = new SalesAdapter(getApplicationContext(), buyers, values);
+        adapter = new SalesAdapter(getApplicationContext(), buyers, values, ids);
         recycler.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(manager);

@@ -5,6 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/config_warn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/config_warn"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/exit_button"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/red"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/exit_button"
+            android:textSize="21sp"
+            app:cornerRadius="24dp" />
+
+    </LinearLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"

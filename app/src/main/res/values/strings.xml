@@ -23,4 +23,15 @@
     <string name="sale_desc_label">Descrição da venda</string>
     <string name="cpf_placeholder">123.456.789-01</string>
     <string name="cpf_label">CPF do comprador:</string>
+    <string name="del_sale_button">Deletar venda</string>
+    <string name="update_sale_button">Atualizar venda</string>
+    <string name="sale_currency">Troco:</string>
+    <string name="sale_paidvalue">Valor pago:</string>
+    <string name="sale_buy_value">Valor:</string>
+    <string name="sale_description">Descrição:</string>
+    <string name="sale_cpf">CPF:</string>
+    <string name="sale_buyerName">Nome:</string>
+    <string name="sale_id">ID:</string>
+    <string name="exit_button">Sair da conta</string>
+    <string name="config_warn">Configurações disponíveis apenas para o Administrador</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.example.salesrecord.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -60,7 +62,7 @@ public class UserLogin extends AppCompatActivity {
         } else if (!Pattern.compile(regex).matcher(email).matches()) {
             emailInput.requestFocus();
             emailInput.setError("Utilize um e-mail válido (exemplo@email.com)");
-        } else if(pass.length() == 0) {
+        } else if (pass.length() == 0) {
             passwordInput.requestFocus();
             passwordInput.setError("Sua senha não pode ser vazia");
         } else if (pass.length() < 4) {

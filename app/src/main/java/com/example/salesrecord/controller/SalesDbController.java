@@ -9,7 +9,7 @@ import com.example.salesrecord.database.CreateDB;
 
 public class SalesDbController  {
     private SQLiteDatabase db;
-    private CreateDB database;
+    private final CreateDB database;
 
     public SalesDbController(Context context) {
         database = new CreateDB(context);
@@ -38,7 +38,19 @@ public class SalesDbController  {
     }
 
     public Cursor readSales() {
-        String query = "SELECT " + CreateDB.BUYER + ", " + CreateDB.VALUE + " FROM " + CreateDB.SALES_TABLE;
+        String query = "SELECT " + CreateDB.SALES_ID + ", " + CreateDB.BUYER + ", " + CreateDB.VALUE + " FROM " + CreateDB.SALES_TABLE;
+        db = database.getReadableDatabase();
+        Cursor cursor = null;
+
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+
+        return cursor;
+    }
+
+    public Cursor readSale(int id) {
+        String query = "SELECT * FROM " + CreateDB.SALES_TABLE + " WHERE " + CreateDB.SALES_ID + " = " + id;
         db = database.getReadableDatabase();
         Cursor cursor = null;
 
