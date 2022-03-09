@@ -192,6 +192,18 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/delete_sale_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/red"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:visibility="invisible"
+        android:text="@string/delete_sale_button"
+        android:textSize="21sp"
+        app:cornerRadius="24dp" />
+
+    <Button
         android:id="@+id/back_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

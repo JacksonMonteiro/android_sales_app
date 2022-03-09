@@ -2,6 +2,7 @@ package com.example.salesrecord.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +11,8 @@ import android.widget.Toast;
 
 import com.example.salesrecord.R;
 import com.example.salesrecord.controller.SalesDbController;
+import com.example.salesrecord.controller.SessionController;
+import com.example.salesrecord.model.Session;
 import com.example.salesrecord.utils.CpfMaskUtil;
 import com.example.salesrecord.utils.MoneyTextWatcher;
 
@@ -17,6 +20,7 @@ import java.text.NumberFormat;
 
 public class SalesRegister extends AppCompatActivity {
     private EditText buyerInput, cpfInput, descInput, valueInput, paidValueInput;
+    private SessionController sessionController;
 
     // Variables
     float valueFloat = 0, paidValueFloat = 0;
@@ -35,6 +39,7 @@ public class SalesRegister extends AppCompatActivity {
         Button backButton = findViewById(R.id.back_button);
         ImageButton returnButton = findViewById(R.id.return_button);
         Button registerSaleButton = findViewById(R.id.create_sale_button);
+        sessionController = new SessionController(new Session(getApplicationContext()));
 
         // Set CPF and Currency input mask to inputs
         cpfInput.addTextChangedListener(CpfMaskUtil.cpfMasker(cpfInput, CpfMaskUtil.FORMAT_CPF));
@@ -68,6 +73,12 @@ public class SalesRegister extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkSession();
     }
 
     public boolean validate(String buyer, String cpf, String value, String paidValue) {
@@ -127,5 +138,14 @@ public class SalesRegister extends AppCompatActivity {
 
     public String getSaleCurrency(Float pv, Float sv) {
         return NumberFormat.getCurrencyInstance(MoneyTextWatcher.PT_BR).format(pv - sv);
+    }
+
+    public void checkSession() {
+        String userEmail = sessionController.getSession();
+
+        if (userEmail == null) {
+            Intent intent = new Intent(getApplicationContext(), UserLogin.class);
+            startActivity(intent);
+        }
     }
 }

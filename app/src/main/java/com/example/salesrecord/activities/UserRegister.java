@@ -1,5 +1,6 @@
 package com.example.salesrecord.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,12 +10,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.salesrecord.R;
+import com.example.salesrecord.controller.SessionController;
 import com.example.salesrecord.controller.UserDbController;
+import com.example.salesrecord.model.Session;
 
 import java.util.regex.Pattern;
 
 public class UserRegister extends AppCompatActivity {
     private EditText usernameInput, emailInput, passwordInput;
+    private SessionController sessionController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,7 @@ public class UserRegister extends AppCompatActivity {
         setContentView(R.layout.activity_user_register);
 
         // Set Views
+        sessionController = new SessionController(new Session(getApplicationContext()));
         usernameInput = findViewById(R.id.username);
         emailInput = findViewById(R.id.email);
         passwordInput = findViewById(R.id.password);
@@ -60,6 +65,12 @@ public class UserRegister extends AppCompatActivity {
         backButton.setOnClickListener(view -> finish());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkSession();
+    }
+
     public boolean validateInputs(String usr, String email, String pass) {
         String EmailRegEX = "^(.+)@(\\S+)$";
         boolean result = false;
@@ -85,5 +96,14 @@ public class UserRegister extends AppCompatActivity {
 
     public boolean patternMatch(String email, String regex) {
         return Pattern.compile(regex).matcher(email).matches();
+    }
+
+    public void checkSession() {
+        String userEmail = sessionController.getSession();
+
+        if (userEmail == null) {
+            Intent intent = new Intent(getApplicationContext(), UserLogin.class);
+            startActivity(intent);
+        }
     }
 }

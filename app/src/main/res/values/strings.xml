@@ -34,4 +34,5 @@
     <string name="sale_id">ID:</string>
     <string name="exit_button">Sair da conta</string>
     <string name="config_warn">Configurações disponíveis apenas para o Administrador</string>
+    <string name="delete_sale_button">Deletar venda</string>
 </resources>

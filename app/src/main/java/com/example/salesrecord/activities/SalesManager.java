@@ -12,11 +12,14 @@ import android.widget.Toast;
 
 import com.example.salesrecord.R;
 import com.example.salesrecord.controller.SalesDbController;
+import com.example.salesrecord.controller.SessionController;
+import com.example.salesrecord.model.Session;
 
 public class SalesManager extends AppCompatActivity {
-    TextView id, sale_buyer, sale_cpf, sale_description, sale_value, sale_paidValue, sale_currency;
-    String code;
-    SalesDbController controller;
+    private TextView id, sale_buyer, sale_cpf, sale_description, sale_value, sale_paidValue, sale_currency;
+    private String code;
+    private SalesDbController controller;
+    private SessionController sessionController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,7 @@ public class SalesManager extends AppCompatActivity {
 
         // Assing Variables
         controller = new SalesDbController(getBaseContext());
+        sessionController = new SessionController(new Session(getApplicationContext()));
 
         id = findViewById(R.id.id_value);
         sale_buyer = findViewById(R.id.buyerName_value);
@@ -46,6 +50,12 @@ public class SalesManager extends AppCompatActivity {
         returnButton.setOnClickListener(view -> finish());
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkSession();
+    }
+
     public void fillTable() {
         Cursor cursor = controller.readSale(Integer.parseInt(code));
         if (cursor.getCount() != 0) {
@@ -60,6 +70,15 @@ public class SalesManager extends AppCompatActivity {
             }
         } else {
             Toast.makeText(this, "Erro ao exibir detalhes da venda", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void checkSession() {
+        String userEmail = sessionController.getSession();
+
+        if (userEmail == null) {
+            Intent intent = new Intent(getApplicationContext(), UserLogin.class);
+            startActivity(intent);
         }
     }
 }

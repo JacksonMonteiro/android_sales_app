@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.example.salesrecord.R;
 import com.example.salesrecord.adapter.SalesAdapter;
 import com.example.salesrecord.controller.SalesDbController;
+import com.example.salesrecord.controller.SessionController;
+import com.example.salesrecord.model.Session;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ public class SalesActivity extends AppCompatActivity {
     private ArrayList<String> buyers, values, ids;
     private SalesDbController controller;
     private SalesAdapter adapter;
+    private SessionController sessionController;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -36,6 +39,7 @@ public class SalesActivity extends AppCompatActivity {
         Button insertSaleButton = findViewById(R.id.create_sale_button);
         recycler = findViewById(R.id.recyclerView);
         controller = new SalesDbController(getBaseContext());
+        sessionController = new SessionController(new Session(getApplicationContext()));
 
         buyers = new ArrayList<>();
         values = new ArrayList<>();
@@ -62,6 +66,12 @@ public class SalesActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkSession();
     }
 
     @Override
@@ -97,5 +107,14 @@ public class SalesActivity extends AppCompatActivity {
 
     public void clearData() {
         adapter.clearData();
+    }
+
+    public void checkSession() {
+        String userEmail = sessionController.getSession();
+
+        if (userEmail == null) {
+            Intent intent = new Intent(getApplicationContext(), UserLogin.class);
+            startActivity(intent);
+        }
     }
 }

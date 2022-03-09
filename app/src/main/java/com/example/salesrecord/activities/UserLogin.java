@@ -1,8 +1,6 @@
 package com.example.salesrecord.activities;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,17 +9,27 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.salesrecord.R;
+import com.example.salesrecord.controller.SessionController;
 import com.example.salesrecord.controller.UserDbController;
+import com.example.salesrecord.model.Session;
+import com.example.salesrecord.model.User;
 
 import java.util.regex.Pattern;
 
 public class UserLogin extends AppCompatActivity {
     private EditText emailInput, passwordInput;
+    private SessionController sessionController;
 
+    // System Methods
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
+
+        // Assing Variables
+        Session session = new Session(getApplicationContext());
+        sessionController = new SessionController(session);
+
         // Edit Texts
         emailInput = findViewById(R.id.email_login);
         passwordInput = findViewById(R.id.password_login);
@@ -38,6 +46,11 @@ public class UserLogin extends AppCompatActivity {
 
             if (validateInputs(email, pass)) {
                 if (controller.isCredentialsOk(email, pass)) {
+                    User user = new User();
+
+                    user.setEmail(email);
+                    sessionController.saveSession(user);
+
                     Intent intent = new Intent(UserLogin.this, SalesActivity.class);
                     startActivity(intent);
                 } else {
@@ -52,6 +65,13 @@ public class UserLogin extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkSession();
+    }
+
+    // My Methods
     public boolean validateInputs(String email, String pass) {
         String regex = "^(.+)@(\\S+)$";
         boolean result = false;
@@ -75,4 +95,12 @@ public class UserLogin extends AppCompatActivity {
         return result;
     }
 
+    public void checkSession() {
+        String userEmail = sessionController.getSession();
+
+        if (userEmail != null) {
+            Intent intent = new Intent(getApplicationContext(), SalesActivity.class);
+            startActivity(intent);
+        }
+    }
 }
