@@ -5,97 +5,74 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.salesrecord.R;
 import com.example.salesrecord.adapter.SalesAdapter;
-import com.example.salesrecord.controller.SalesDbController;
+import com.example.salesrecord.adapter.UserAdapter;
 import com.example.salesrecord.controller.SessionController;
+import com.example.salesrecord.controller.UserDbController;
 import com.example.salesrecord.model.Session;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 
-public class SalesActivity extends AppCompatActivity {
-    private BottomNavigationView navigationView;
+public class UsersActivity extends AppCompatActivity {
+    private ArrayList<String> ids, emails;
     private RecyclerView recycler;
-    private ArrayList<String> buyers, values, ids;
-    private SalesDbController controller;
-    private SalesAdapter adapter;
+    private UserAdapter adapter;
+    private UserDbController controller;
     private SessionController sessionController;
 
-    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sales);
+        setContentView(R.layout.activity_users);
 
         // Disable Night Mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-        // Assign variables
-        navigationView = findViewById(R.id.bottom_navigation);
-        Button insertSaleButton = findViewById(R.id.create_sale_button);
-        recycler = findViewById(R.id.recyclerView);
-        controller = new SalesDbController(getBaseContext());
+        // Assing Variables
+        ids = new ArrayList<>();
+        emails = new ArrayList<>();
+
+        recycler = findViewById(R.id.user_recycler);
+
+        controller = new UserDbController(getBaseContext());
         sessionController = new SessionController(new Session(getApplicationContext()));
 
-        buyers = new ArrayList<>();
-        values = new ArrayList<>();
-        ids = new ArrayList<>();
+        Button backButton = findViewById(R.id.back_button);
+        ImageButton returnButton = findViewById(R.id.return_button);
 
+
+        // Fill data
         fillArrayList();
         attachAdapter();
 
-        // Button Methods
-        insertSaleButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SalesRegister.class)));
-
-        // set selected item
-        navigationView.setSelectedItemId(R.id.home);
-        // Perform selection list
-        navigationView.setOnNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.home:
-                    return true;
-                case R.id.config:
-                    Intent intent = new Intent(getApplicationContext(), ConfigActivity.class);
-                    startActivity(intent);
-                    finish();
-                    return true;
-            }
-            return false;
-        });
+        backButton.setOnClickListener(view -> finish());
+        returnButton.setOnClickListener(view -> finish());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        checkSession();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-
-        navigationView.setSelectedItemId(R.id.home);
-
         clearData();
         fillArrayList();
         attachAdapter();
+        checkSession();
     }
 
     public void fillArrayList() {
-        Cursor cursor = controller.readSales();
+        Cursor cursor = controller.readUsers();
         if (cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
                 ids.add(cursor.getString(0));
-                buyers.add(cursor.getString(1));
-                values.add(cursor.getString(2));
+                emails.add(cursor.getString(1));
             }
         } else {
             Toast.makeText(this, "Não há dados para exibir", Toast.LENGTH_SHORT).show();
@@ -103,7 +80,7 @@ public class SalesActivity extends AppCompatActivity {
     }
 
     public void attachAdapter() {
-        adapter = new SalesAdapter(getApplicationContext(), buyers, values, ids);
+        adapter = new UserAdapter(getApplicationContext(), ids, emails);
         recycler.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
         recycler.setLayoutManager(manager);

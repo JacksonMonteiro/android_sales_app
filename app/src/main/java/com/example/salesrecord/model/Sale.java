@@ -1,12 +1,21 @@
 package com.example.salesrecord.model;
 
 public class Sale {
+    private int id;
     private String buyer;
     private String buyerCPF;
     private String saleDescription;
     private int saleValue;
     private int paidValue;
     private int currency;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getBuyer() {
         return buyer;

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.example.salesrecord.database.CreateDB;
 
-public class SalesDbController  {
+public class SalesDbController {
     private SQLiteDatabase db;
     private final CreateDB database;
 
@@ -59,5 +59,12 @@ public class SalesDbController  {
         }
 
         return cursor;
+    }
+
+    public void deleteSale(int id) {
+        String where = CreateDB.SALES_ID + " = " + id;
+        db = database.getReadableDatabase();
+        db.delete(CreateDB.SALES_TABLE, where, null);
+        db.close();
     }
 }

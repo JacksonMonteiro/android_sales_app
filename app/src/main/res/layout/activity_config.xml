@@ -23,6 +23,19 @@
             android:textStyle="bold" />
 
         <Button
+            android:id="@+id/managa_users_button"
+            android:layout_marginTop="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/darkGray"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/managa_users_button"
+            android:textSize="21sp"
+            android:visibility="gone"
+            app:cornerRadius="24dp" />
+
+        <Button
             android:id="@+id/exit_button"
             android:layout_marginTop="12dp"
             android:layout_width="match_parent"

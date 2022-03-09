@@ -5,29 +5,20 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/id_item"
+        android:id="@+id/user_id_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.8"
+        android:layout_weight="0.9"
         android:textAlignment="center"
         android:textStyle="bold"
         android:textColor="@color/primaryColorDark"
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/buyer_name_item"
+        android:id="@+id/email_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
+        android:layout_weight="0.1"
         android:textStyle="bold"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/sale_value_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:textAlignment="textEnd"
-        android:textColor="@color/primaryColorDark"
         android:textSize="16sp" />
 </LinearLayout>

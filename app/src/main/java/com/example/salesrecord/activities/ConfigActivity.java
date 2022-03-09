@@ -2,9 +2,12 @@ package com.example.salesrecord.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.salesrecord.R;
 import com.example.salesrecord.controller.SessionController;
@@ -14,21 +17,37 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class ConfigActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
     private SessionController controller;
+    private TextView warn;
+    private Button profileBtn, mngUsersBtn;
+    private String admin_email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
 
+        // Disable Night Mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
         // Assing Variables
-        navigationView = findViewById(R.id.bottom_navigation);
+        warn = findViewById(R.id.config_warn);
+
         Button exit = findViewById(R.id.exit_button);
+        mngUsersBtn = findViewById(R.id.managa_users_button);
+
+        navigationView = findViewById(R.id.bottom_navigation);
+
         controller = new SessionController(new Session(getApplicationContext()));
+        admin_email = controller.getSession();
 
         // Button Methods
+        mngUsersBtn.setOnClickListener(view -> {
+            startActivity(new Intent(getApplicationContext(), UsersActivity.class));
+        });
+
         exit.setOnClickListener(view -> {
             controller.removeSession();
-            finish();
+            startActivity(new Intent(getApplicationContext(), UserLogin.class));
         });
 
         // set selected item
@@ -46,6 +65,7 @@ public class ConfigActivity extends AppCompatActivity {
             }
             return false;
         });
+        isAdminAccess();
     }
 
     @Override
@@ -66,6 +86,13 @@ public class ConfigActivity extends AppCompatActivity {
         if (userEmail == null) {
             Intent intent = new Intent(getApplicationContext(), UserLogin.class);
             startActivity(intent);
+        }
+    }
+
+    public void isAdminAccess() {
+        if (admin_email.equals("admin@registra.com")) {
+            warn.setVisibility(View.GONE);
+            mngUsersBtn.setVisibility(View.VISIBLE);
         }
     }
 }

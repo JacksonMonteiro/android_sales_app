@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -15,20 +14,20 @@ import android.widget.Toast;
 import com.example.salesrecord.R;
 import com.example.salesrecord.controller.SalesDbController;
 import com.example.salesrecord.controller.SessionController;
+import com.example.salesrecord.controller.UserDbController;
 import com.example.salesrecord.model.Session;
 
-public class SalesManager extends AppCompatActivity {
-    private TextView id, sale_buyer, sale_cpf, sale_description, sale_value, sale_paidValue, sale_currency;
-    private String code, admin_email;
-    private Button deleteSaleBtn;
-    private SalesDbController controller;
+public class UserManagment extends AppCompatActivity {
+    private TextView id, user_name, user_email;
+    private String code;
+    private Button deleteUserButton;
+    private UserDbController controller;
     private SessionController sessionController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sales_manager);
-
+        setContentView(R.layout.activity_user_managment);
         // Disable Night Mode
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
@@ -36,35 +35,28 @@ public class SalesManager extends AppCompatActivity {
         code = getIntent().getStringExtra("id");
 
         // Assing Variables
-        controller = new SalesDbController(getBaseContext());
-
+        controller = new UserDbController(getBaseContext());
         sessionController = new SessionController(new Session(getApplicationContext()));
-        admin_email = sessionController.getSession();
 
-        id = findViewById(R.id.id_value);
-        sale_buyer = findViewById(R.id.buyerName_value);
-        sale_cpf = findViewById(R.id.cpfValue);
-        sale_description = findViewById(R.id.description_value);
-        sale_value = findViewById(R.id.buyValue);
-        sale_paidValue = findViewById(R.id.paidValue);
-        sale_currency = findViewById(R.id.currency_value);
+        id = findViewById(R.id.user_id_value);
+        user_name = findViewById(R.id.user_name_value);
+        user_email = findViewById(R.id.user_email_value);
 
         fillTable();
 
         Button backButton = findViewById(R.id.back_button);
-        deleteSaleBtn = findViewById(R.id.delete_sale_button);
+        deleteUserButton = findViewById(R.id.delete_user_button);
         ImageButton returnButton = findViewById(R.id.return_button);
 
         // Finish Activity buttons
         backButton.setOnClickListener(view -> finish());
         returnButton.setOnClickListener(view -> finish());
 
-        deleteSaleBtn.setOnClickListener(view -> {
-            controller.deleteSale(Integer.parseInt(id.getText().toString()));
+        deleteUserButton.setOnClickListener(view -> {
+            controller.deleteUser(Integer.parseInt(id.getText().toString()));
             finish();
         });
 
-        isAdminAccess();
     }
 
     @Override
@@ -74,19 +66,15 @@ public class SalesManager extends AppCompatActivity {
     }
 
     public void fillTable() {
-        Cursor cursor = controller.readSale(Integer.parseInt(code));
+        Cursor cursor = controller.readUser(Integer.parseInt(code));
         if (cursor.getCount() != 0) {
-            while(cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 id.setText(cursor.getString(0));
-                sale_buyer.setText(cursor.getString(1));
-                sale_cpf.setText(cursor.getString(2));
-                sale_description.setText(cursor.getString(3));
-                sale_value.setText(cursor.getString(4));
-                sale_paidValue.setText(cursor.getString(5));
-                sale_currency.setText(cursor.getString(6));
+                user_name.setText(cursor.getString(1));
+                user_email.setText(cursor.getString(2));
             }
         } else {
-            Toast.makeText(this, "Erro ao exibir detalhes da venda", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Erro ao exibir detalhes do usuário", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -96,12 +84,6 @@ public class SalesManager extends AppCompatActivity {
         if (userEmail == null) {
             Intent intent = new Intent(getApplicationContext(), UserLogin.class);
             startActivity(intent);
-        }
-    }
-
-    public void isAdminAccess() {
-        if (admin_email.equals("admin@registra.com")) {
-            deleteSaleBtn.setVisibility(View.VISIBLE);
         }
     }
 }

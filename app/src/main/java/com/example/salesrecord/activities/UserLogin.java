@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.salesrecord.R;
 import com.example.salesrecord.controller.SessionController;
@@ -25,6 +26,8 @@ public class UserLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
+        // Disable Night Mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         // Assing Variables
         Session session = new Session(getApplicationContext());
@@ -53,6 +56,7 @@ public class UserLogin extends AppCompatActivity {
 
                     Intent intent = new Intent(UserLogin.this, SalesActivity.class);
                     startActivity(intent);
+                    finish();
                 } else {
                     Toast.makeText(getApplicationContext(), "E-mail ou senha incorretos", Toast.LENGTH_SHORT).show();
                 }

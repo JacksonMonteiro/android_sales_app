@@ -35,4 +35,6 @@
     <string name="exit_button">Sair da conta</string>
     <string name="config_warn">Configurações disponíveis apenas para o Administrador</string>
     <string name="delete_sale_button">Deletar venda</string>
+    <string name="managa_users_button">Gerenciar Usuários</string>
+    <string name="delete_user_button">Deletar Usuário</string>
 </resources>
