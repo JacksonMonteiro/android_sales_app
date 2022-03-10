@@ -105,6 +105,9 @@ public class UserLogin extends AppCompatActivity {
         if (userEmail != null) {
             Intent intent = new Intent(getApplicationContext(), SalesActivity.class);
             startActivity(intent);
+            finish();
+        } else {
+            return;
         }
     }
 }

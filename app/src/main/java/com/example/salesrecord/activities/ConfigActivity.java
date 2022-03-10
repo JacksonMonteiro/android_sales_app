@@ -17,9 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class ConfigActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
     private SessionController controller;
-    private TextView warn;
-    private Button profileBtn, mngUsersBtn;
-    private String admin_email;
+    private Button mngUsersBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,24 +28,14 @@ public class ConfigActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         // Assing Variables
-        warn = findViewById(R.id.config_warn);
-
-        Button exit = findViewById(R.id.exit_button);
         mngUsersBtn = findViewById(R.id.managa_users_button);
 
         navigationView = findViewById(R.id.bottom_navigation);
-
         controller = new SessionController(new Session(getApplicationContext()));
-        admin_email = controller.getSession();
 
         // Button Methods
         mngUsersBtn.setOnClickListener(view -> {
             startActivity(new Intent(getApplicationContext(), UsersActivity.class));
-        });
-
-        exit.setOnClickListener(view -> {
-            controller.removeSession();
-            startActivity(new Intent(getApplicationContext(), UserLogin.class));
         });
 
         // set selected item
@@ -62,10 +50,14 @@ public class ConfigActivity extends AppCompatActivity {
                     return true;
                 case R.id.config:
                     return true;
+                case R.id.exit:
+                    controller.removeSession();
+                    startActivity(new Intent(getApplicationContext(), UserLogin.class));
+                    finish();
+                    return true;
             }
             return false;
         });
-        isAdminAccess();
     }
 
     @Override
@@ -86,13 +78,6 @@ public class ConfigActivity extends AppCompatActivity {
         if (userEmail == null) {
             Intent intent = new Intent(getApplicationContext(), UserLogin.class);
             startActivity(intent);
-        }
-    }
-
-    public void isAdminAccess() {
-        if (admin_email.equals("admin@registra.com")) {
-            warn.setVisibility(View.GONE);
-            mngUsersBtn.setVisibility(View.VISIBLE);
         }
     }
 }

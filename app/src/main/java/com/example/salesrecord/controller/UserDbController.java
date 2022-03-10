@@ -60,7 +60,7 @@ public class UserDbController extends CreateDB {
     }
 
     public Cursor readUsers() {
-        String query = "SELECT " + CreateDB.USER_ID + ", " + CreateDB.EMAIL + " FROM " + CreateDB.USER_TABLE;
+        String query = "SELECT " + CreateDB.EMAIL + " FROM " + CreateDB.USER_TABLE;
         db = this.getReadableDatabase();
         Cursor cursor = null;
 
@@ -71,20 +71,8 @@ public class UserDbController extends CreateDB {
         return cursor;
     }
 
-    public Cursor readUser(int id) {
-        String query = "SELECT * FROM " + CreateDB.USER_TABLE + " WHERE " + CreateDB.USER_ID + " = " + id;
-        db = this.getReadableDatabase();
-        Cursor cursor = null;
-
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-        }
-
-        return cursor;
-    }
-
-    public void deleteUser(int id) {
-        String where = CreateDB.USER_ID + " = " + id;
+    public void deleteUser(String email) {
+        String where = CreateDB.EMAIL + " = '" + email + "'";
         db = this.getReadableDatabase();
         db.delete(CreateDB.USER_TABLE, where, null);
         db.close();

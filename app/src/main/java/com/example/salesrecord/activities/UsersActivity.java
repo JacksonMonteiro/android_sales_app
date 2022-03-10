@@ -2,6 +2,7 @@ package com.example.salesrecord.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +24,7 @@ import com.example.salesrecord.model.Session;
 import java.util.ArrayList;
 
 public class UsersActivity extends AppCompatActivity {
-    private ArrayList<String> ids, emails;
+    private ArrayList<String> emails;
     private RecyclerView recycler;
     private UserAdapter adapter;
     private UserDbController controller;
@@ -38,7 +39,6 @@ public class UsersActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         // Assing Variables
-        ids = new ArrayList<>();
         emails = new ArrayList<>();
 
         recycler = findViewById(R.id.user_recycler);
@@ -48,7 +48,6 @@ public class UsersActivity extends AppCompatActivity {
 
         Button backButton = findViewById(R.id.back_button);
         ImageButton returnButton = findViewById(R.id.return_button);
-
 
         // Fill data
         fillArrayList();
@@ -71,8 +70,7 @@ public class UsersActivity extends AppCompatActivity {
         Cursor cursor = controller.readUsers();
         if (cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
-                ids.add(cursor.getString(0));
-                emails.add(cursor.getString(1));
+                emails.add(cursor.getString(0));
             }
         } else {
             Toast.makeText(this, "Não há dados para exibir", Toast.LENGTH_SHORT).show();
@@ -80,10 +78,12 @@ public class UsersActivity extends AppCompatActivity {
     }
 
     public void attachAdapter() {
-        adapter = new UserAdapter(getApplicationContext(), ids, emails);
-        recycler.setAdapter(adapter);
+        adapter = new UserAdapter(getApplicationContext(), emails, getBaseContext());
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        DividerItemDecoration divider = new DividerItemDecoration(recycler.getContext(), manager.getOrientation());
+        recycler.setAdapter(adapter);
         recycler.setLayoutManager(manager);
+        recycler.addItemDecoration(divider);
     }
 
     public void clearData() {

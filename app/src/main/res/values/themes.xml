@@ -8,5 +8,6 @@
         <item name="colorAccent">@color/accentColor</item>
 
         <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@color/primaryColorDark</item>
     </style>
 </resources>

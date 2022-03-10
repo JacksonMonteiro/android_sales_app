@@ -10,7 +10,6 @@
     <string name="email_placeholder">email@registra.com</string>
     <string name="password_label">Senha:</string>
     <string name="password_placeholder">********</string>
-    <string name="create_sale_button">Cadastrar venda</string>
     <string name="buyer_label">Nome do comprador:</string>
     <string name="buyer_placeholder">Matheus</string>
     <string name="sale_value">100,00</string>
@@ -37,4 +36,5 @@
     <string name="delete_sale_button">Deletar venda</string>
     <string name="managa_users_button">Gerenciar Usuários</string>
     <string name="delete_user_button">Deletar Usuário</string>
+    <string name="create_sale_button">Cadastrar venda</string>
 </resources>

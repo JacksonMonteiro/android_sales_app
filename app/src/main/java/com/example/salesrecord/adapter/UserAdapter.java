@@ -1,27 +1,32 @@
 package com.example.salesrecord.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.salesrecord.R;
-import com.example.salesrecord.activities.UserManagment;
+import com.example.salesrecord.activities.UsersActivity;
+import com.example.salesrecord.controller.UserDbController;
+import com.example.salesrecord.model.User;
 
 import java.util.ArrayList;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
-    private Context myContext;
-    private final ArrayList id, email;
+    private final Context myContext;
+    private final Context myBaseContext;
+    private final ArrayList<String> email;
 
-    public UserAdapter(Context context, ArrayList idList, ArrayList emailList) {
+    public UserAdapter(Context context, ArrayList<String> emailList, Context base) {
         this.myContext = context;
-        this.id = idList;
+        this.myBaseContext = base;
         this.email = emailList;
     }
 
@@ -35,36 +40,36 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull UserAdapter.ViewHolder holder, int position) {
-        holder.id_item.setText(String.valueOf(id.get(position)));
         holder.email_item.setText(String.valueOf(email.get(position)));
     }
 
     @Override
     public int getItemCount() {
-        return id.size();
+        return email.size();
     }
 
     public void clearData() {
-        id.clear();
         email.clear();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView id_item, email_item;
+
+    class ViewHolder extends RecyclerView.ViewHolder  {
+        TextView email_item;
+        ImageButton deleteUsr;
 
         ViewHolder(View itemView) {
             super(itemView);
-            id_item = itemView.findViewById(R.id.user_id_item);
             email_item = itemView.findViewById(R.id.email_item);
-            itemView.setOnClickListener(this);
-        }
+            deleteUsr = itemView.findViewById(R.id.delete_usr_btn);
 
-        @Override
-        public void onClick(View view) {
-            Intent userIntent = new Intent(myContext, UserManagment.class);
-            userIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            userIntent.putExtra("id", String.valueOf(id.get(getAdapterPosition())));
-            myContext.startActivity(userIntent);
+            deleteUsr.setOnClickListener(view -> {
+                UserDbController controller = new UserDbController(myBaseContext);
+                controller.deleteUser(email_item.getText().toString());
+
+                Intent i = new Intent(myContext, UsersActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                myContext.startActivity(i);
+            });
         }
     }
 }

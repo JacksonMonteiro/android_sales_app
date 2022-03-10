@@ -2,13 +2,19 @@ package com.example.salesrecord.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -25,6 +31,7 @@ public class SalesActivity extends AppCompatActivity {
     private BottomNavigationView navigationView;
     private RecyclerView recycler;
     private ArrayList<String> buyers, values, ids;
+    private String admin_email;
     private SalesDbController controller;
     private SalesAdapter adapter;
     private SessionController sessionController;
@@ -39,11 +46,14 @@ public class SalesActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         // Assign variables
-        navigationView = findViewById(R.id.bottom_navigation);
         Button insertSaleButton = findViewById(R.id.create_sale_button);
+        navigationView = findViewById(R.id.bottom_navigation);
+
         recycler = findViewById(R.id.recyclerView);
+
         controller = new SalesDbController(getBaseContext());
         sessionController = new SessionController(new Session(getApplicationContext()));
+        admin_email = sessionController.getSession();
 
         buyers = new ArrayList<>();
         values = new ArrayList<>();
@@ -55,9 +65,8 @@ public class SalesActivity extends AppCompatActivity {
         // Button Methods
         insertSaleButton.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(), SalesRegister.class)));
 
-        // set selected item
+        // set selected item and perform selection list
         navigationView.setSelectedItemId(R.id.home);
-        // Perform selection list
         navigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.home:
@@ -67,9 +76,17 @@ public class SalesActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                     return true;
+                case R.id.exit:
+                    sessionController.removeSession();
+                    startActivity(new Intent(getApplicationContext(), UserLogin.class));
+                    finish();
+                    return true;
             }
             return false;
         });
+
+        // Admin Acess
+        isAdminAccess();
     }
 
     @Override
@@ -89,6 +106,12 @@ public class SalesActivity extends AppCompatActivity {
         attachAdapter();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     public void fillArrayList() {
         Cursor cursor = controller.readSales();
         if (cursor.getCount() != 0) {
@@ -104,9 +127,11 @@ public class SalesActivity extends AppCompatActivity {
 
     public void attachAdapter() {
         adapter = new SalesAdapter(getApplicationContext(), buyers, values, ids);
-        recycler.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        DividerItemDecoration divider = new DividerItemDecoration(recycler.getContext(), manager.getOrientation());
+        recycler.setAdapter(adapter);
         recycler.setLayoutManager(manager);
+        recycler.addItemDecoration(divider);
     }
 
     public void clearData() {
@@ -119,6 +144,13 @@ public class SalesActivity extends AppCompatActivity {
         if (userEmail == null) {
             Intent intent = new Intent(getApplicationContext(), UserLogin.class);
             startActivity(intent);
+        }
+    }
+
+    public void isAdminAccess() {
+        if (!admin_email.equals("admin@registra.com")) {
+            MenuItem item = navigationView.getMenu().findItem(R.id.config);
+            item.setVisible(false);
         }
     }
 }
